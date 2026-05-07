@@ -1,4 +1,4 @@
-git config pull.rebase true
+
    \\
    (o>
 \\_//)
