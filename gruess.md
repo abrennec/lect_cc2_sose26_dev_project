@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-hello nike <3
-=======
 hello
->>>>>>> dev-branch-amelolie
+
+hello nike <3
