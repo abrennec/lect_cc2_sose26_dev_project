@@ -11,14 +11,12 @@ void ofApp::setup(){
 
 
 	ofBackground(0);
-
 	int numBalls = 5;
 
 	// fill our vector
 	for (int i = 0; i < numBalls; i++) {
 		balls.push_back(Ball());
 	}
-
 }
 
 //--------------------------------------------------------------
@@ -32,25 +30,42 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-	for (int i = 0; i < balls.size(); i++) {
-		balls[i].draw();
-	}
+	// Executing Ball logic function
+	drawBalls();
+
+	// Executing Screen Capture function
+	captureScreen();
 	
+	// Executing the Grid Overlay function
+	drawGridOverlay();
+}
+
+//--------------------------------------------------------------
+void ofApp::captureScreen() {
 	// now, take a "screenshot" of the frame
 	screenImage.grabScreen(0,0,ofGetWidth(),ofGetHeight());
 	
 	// resize the screenshot to 10x10 pixels
 	screenImage.resize(10,10);
-	
-	
+}
+
+//--------------------------------------------------------------
+void ofApp::drawBalls() {
+	for (int i = 0; i < balls.size(); i++) {
+		balls[i].draw();
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::drawGridOverlay() {
+
 	// sample colors from the screenshot, and draw as a grid overlay:
 	// overlay opacity based on mouse x
 	float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
 	
 	ofSetColor(0, alpha);
-	ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());	// draw black rect to clear screen
-	
-	
+	ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
+
 	int numCols = 10;
 	int numRows = 10;
 	
@@ -67,17 +82,15 @@ void ofApp::draw(){
 			color.a = alpha;
 			
 			// draw a rectangle on screen
-			
 			ofSetColor(color);
 			ofDrawRectangle(x * width, y * height, width, height);
 		}
 	}
-
 }
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
 }
 
 //--------------------------------------------------------------

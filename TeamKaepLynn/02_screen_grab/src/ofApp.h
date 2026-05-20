@@ -10,6 +10,11 @@ public:
 	void update();
 	void draw();
 
+	// newly added functions :)
+	void drawGridOverlay();
+	void drawBalls();
+	void captureScreen();
+
 	void keyPressed(int key);
 	void keyReleased(int key);
 	void mouseMoved(int x, int y );
@@ -22,9 +27,7 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+private:
 	std::vector<Ball> balls;
-	
-	ofImage screenImage; // store a "screenshot" of each frame
-	
-		
+	ofImage screenImage;
 };
