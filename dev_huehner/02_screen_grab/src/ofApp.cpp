@@ -31,53 +31,55 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
-	for (int i = 0; i < balls.size(); i++) {
-		balls[i].draw();
-	}
-	
-	// now, take a "screenshot" of the frame
-	screenImage.grabScreen(0,0,ofGetWidth(),ofGetHeight());
-	
-	// resize the screenshot to 10x10 pixels
-	screenImage.resize(10,10);
-	
-	
-	// sample colors from the screenshot, and draw as a grid overlay:
-	// overlay opacity based on mouse x
-	float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
-	
-	ofSetColor(0, alpha);
-	ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());	// draw black rect to clear screen
-	
-	
-	int numCols = 10;
-	int numRows = 10;
-	
-	// grid square size for drawing:
-	float width = ofGetWidth() / (float)numCols;
-	float height = ofGetHeight() / (float)numRows;
-
-	
-	for (int y=0; y<numRows; y++) {
-		for (int x=0; x<numCols; x++) {
-			
-			// sample the color of the screenshot at this grid pos
-			ofColor color = screenImage.getColor(x,y);
-			color.a = alpha;
-			
-			// draw a rectangle on screen
-			
-			ofSetColor(color);
-			ofDrawRectangle(x * width, y * height, width, height);
-		}
-	}
-
+    drawBalls();
+    updateScreenshot();
+    drawPixelGrid();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 
+}
+
+//--------------------------------------------------------------
+void ofApp::drawBalls(){
+    for (int i = 0; i < balls.size(); i++) {
+        balls[i].draw();
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::updateScreenshot(){
+    // take a "screenshot" of the frame
+    screenImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+    
+    // resize the screenshot to 10x10 pixels
+    screenImage.resize(10, 10);
+}
+
+//--------------------------------------------------------------
+void ofApp::drawPixelGrid(){
+    // overlay opacity based on mouse x
+    float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
+    
+    ofSetColor(0, alpha);
+    ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+    
+    int numCols = 10;
+    int numRows = 10;
+    
+    float width = ofGetWidth() / (float)numCols;
+    float height = ofGetHeight() / (float)numRows;
+    
+    for (int y = 0; y < numRows; y++) {
+        for (int x = 0; x < numCols; x++) {
+            ofColor color = screenImage.getColor(x, y);
+            color.a = alpha;
+            
+            ofSetColor(color);
+            ofDrawRectangle(x * width, y * height, width, height);
+        }
+    }
 }
 
 //--------------------------------------------------------------
