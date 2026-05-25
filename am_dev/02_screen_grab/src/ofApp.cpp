@@ -1,72 +1,82 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
-
+void ofApp::setup()
+{
+	ofEnableDepthTest();
+	ofEnableLighting();
+	icosphere.setup();
 
 	cout << "GL Version: " << glGetString(GL_VERSION) << endl;
-    cout << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
-    cout << "Renderer: " << glGetString(GL_RENDERER) << endl;
-    cout << "Vendor: " << glGetString(GL_VENDOR) << endl;
-
+	cout << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
+	cout << "Renderer: " << glGetString(GL_RENDERER) << endl;
+	cout << "Vendor: " << glGetString(GL_VENDOR) << endl;
 
 	ofBackground(0);
 
 	int numBalls = 5;
 
 	// fill our vector
-	for (int i = 0; i < numBalls; i++) {
+	for (int i = 0; i < numBalls; i++)
+	{
 		balls.push_back(Ball());
 	}
-
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update()
+{
 
-	for (int i = 0; i < balls.size(); i++) {
+	for (int i = 0; i < balls.size(); i++)
+	{
 		balls[i].update();
 	}
+
+	icosphere.update();
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
-	
+void ofApp::draw()
+{
+
 	drawBall();
 	takeScreenshot();
+	ofDisableDepthTest();
 	drawGrid();
-	
-
+	ofEnableDepthTest();
+	icosphere.draw();
 }
 
 //--------------------------------------------------------------
-void ofApp::drawBall() {
+void ofApp::drawBall()
+{
 
-	for (int i = 0; i < balls.size(); i++) {
+	for (int i = 0; i < balls.size(); i++)
+	{
 		balls[i].draw();
 	}
-
 }
 
 //--------------------------------------------------------------
-void ofApp::takeScreenshot() {
+void ofApp::takeScreenshot()
+{
 
 	// now, take a "screenshot" of the frame
 	screenImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
 
 	// resize the screenshot to 10x10 pixels
 	screenImage.resize(10, 10);
-
 }
 
-void ofApp::drawGrid() {
+void ofApp::drawGrid()
+{
 
 	// sample colors from the screenshot, and draw as a grid overlay:
 	// overlay opacity based on mouse x
 	float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
 
 	ofSetColor(0, alpha);
-	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());	// draw black rect to clear screen
+	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight()); // draw black rect to clear screen
 
 	int numCols = 10;
 	int numRows = 10;
@@ -75,9 +85,10 @@ void ofApp::drawGrid() {
 	float width = ofGetWidth() / (float)numCols;
 	float height = ofGetHeight() / (float)numRows;
 
-
-	for (int y = 0; y < numRows; y++) {
-		for (int x = 0; x < numCols; x++) {
+	for (int y = 0; y < numRows; y++)
+	{
+		for (int x = 0; x < numCols; x++)
+		{
 
 			// sample the color of the screenshot at this grid pos
 			ofColor color = screenImage.getColor(x, y);
@@ -89,62 +100,59 @@ void ofApp::drawGrid() {
 			ofDrawRectangle(x * width, y * height, width, height);
 		}
 	}
-
-
-}
-
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
+void ofApp::keyPressed(int key)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
+void ofApp::keyReleased(int key)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
+void ofApp::mouseMoved(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
+void ofApp::mouseDragged(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
+void ofApp::mousePressed(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
+void ofApp::mouseReleased(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
+void ofApp::mouseEntered(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
+void ofApp::mouseExited(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
+void ofApp::windowResized(int w, int h)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::gotMessage(ofMessage msg)
+{
+}
 
+//--------------------------------------------------------------
+void ofApp::dragEvent(ofDragInfo dragInfo)
+{
 }
