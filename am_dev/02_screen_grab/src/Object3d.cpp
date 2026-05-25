@@ -5,7 +5,7 @@ Object3d::Object3d(){
     color = {255, 50, 100};
     lightPos = {300,300,600};
     rotation = 0;
-    icoPos = { 200, 200, 200 };
+    icoPos = {350, 250, 150};
 
 
 }
@@ -18,12 +18,12 @@ void Object3d::setup(){
 
     material.setDiffuseColor(ofColor(255, 50, 100));
     material.setSpecularColor(ofColor::white);
-    material.setShininess(120);
+    material.setShininess(200);
 
 }
 
     void Object3d::update() {
-    rotation += 3;  
+    rotation += 2.5;  
 }
 
     void Object3d::draw() {

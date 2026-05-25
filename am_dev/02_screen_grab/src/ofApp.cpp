@@ -10,7 +10,7 @@ void ofApp::setup()
 
 	ofBackground(0);
 
-	int numBalls = 5;
+	int numBalls = 20;
 
 	for (int i = 0; i < numBalls; i++)
 	{
@@ -66,7 +66,7 @@ void ofApp::takeScreenshot()
 	screenImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
 
 	// höhere Auflösung für besseres Pixel Sorting
-	screenImage.resize(120, 120);
+	screenImage.resize(160, 160);
 }
 
 //--------------------------------------------------------------
@@ -90,7 +90,7 @@ void ofApp::pixelSort()
 			float brightness = c.getBrightness();
 
 			// threshold
-			if (brightness > 100)
+			if (brightness > 40)
 			{
 				brightPixels.push_back(c);
 			}
@@ -130,8 +130,8 @@ void ofApp::drawGrid()
 	ofSetColor(0, alpha);
 	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
-	int numCols = 120;
-	int numRows = 120;
+	int numCols = 160;
+	int numRows = 160;
 
 	float width = ofGetWidth() / (float)numCols;
 	float height = ofGetHeight() / (float)numRows;
