@@ -3,6 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+	ofEnableDepthTest();
+	ofEnableLighting();
+	icosphere.setup();
 
 	cout << "GL Version: " << glGetString(GL_VERSION) << endl;
 	cout << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
@@ -28,6 +31,8 @@ void ofApp::update()
 	{
 		balls[i].update();
 	}
+
+	icosphere.update();
 }
 
 //--------------------------------------------------------------
@@ -36,7 +41,10 @@ void ofApp::draw()
 
 	drawBall();
 	takeScreenshot();
+	ofDisableDepthTest();
 	drawGrid();
+	ofEnableDepthTest();
+	icosphere.draw();
 }
 
 //--------------------------------------------------------------
@@ -60,41 +68,6 @@ void ofApp::takeScreenshot()
 	screenImage.resize(10, 10);
 }
 
-void ofApp::drawGrid()
-{
-
-	// sample colors from the screenshot, and draw as a grid overlay:
-	// overlay opacity based on mouse x
-	float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
-
-	ofSetColor(0, alpha);
-	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight()); // draw black rect to clear screen
-
-	int numCols = 10;
-	int numRows = 10;
-
-	// grid square size for drawing:
-	float width = ofGetWidth() / (float)numCols;
-	float height = ofGetHeight() / (float)numRows;
-
-	for (int y = 0; y < numRows; y++)
-	{
-		for (int x = 0; x < numCols; x++)
-		{
-
-			// sample the color of the screenshot at this grid pos
-			ofColor color = screenImage.getColor(x, y);
-			color.a = alpha;
-
-			// draw a rectangle on screen
-
-			ofSetColor(color);
-			ofDrawRectangle(x * width, y * height, width, height);
-		}
-	}
-}
-
-//--------------------------------------------------------------
 void ofApp::drawGrid()
 {
 

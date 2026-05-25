@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Ball.h"
+#include "Object3d.h"
 
 class ofApp : public ofBaseApp
 {
@@ -25,6 +26,8 @@ public:
 	void drawBall();
 	void takeScreenshot();
 	void drawGrid();
+
+	Object3d icosphere;
 
 	std::vector<Ball> balls;
 
