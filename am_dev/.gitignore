@@ -1,0 +1,73 @@
+# ─ ignore all files recursively
+**/*
+
+# ─ but don’t ignore directories (so git will still traverse in)
+!**/
+
+# ─ and don’t ignore any file that has at least one dot in its name
+!**/*.*
+
+!Makefile
+
+# ignore formatter settings
+.clang-format
+
+# ignore other cpp compilation artifacts
+*.i
+*.s
+
+# Example .gitignore file
+# Configuration for C++ development
+
+# Prerequisites
+*.d
+*~
+
+/*/.DS_Store
+.DS_Store
+#.gitignore
+
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Directories
+obj/
+.vs/
+bin/
+
+# IDE project files
+*.sln
+*.vcxproj*
+*.xcodeproj/
+*.code-workspace
+*.xcconfig
+*.vscode
+*.plist
+*.entitlements
+
+# other
+*.ppm
