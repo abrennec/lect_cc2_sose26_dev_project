@@ -31,10 +31,6 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
-	for (int i = 0; i < balls.size(); i++) {
-		balls[i].draw();
-	}
 	
 	// now, take a "screenshot" of the frame
 	screenImage.grabScreen(0,0,ofGetWidth(),ofGetHeight());
@@ -49,7 +45,6 @@ void ofApp::draw(){
 	
 	ofSetColor(0, alpha);
 	ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());	// draw black rect to clear screen
-	
 	
 	int numCols = 10;
 	int numRows = 10;
@@ -74,6 +69,25 @@ void ofApp::draw(){
 	}
 
 }
+
+//--------------------------------------------------------------
+void ofApp::drawBall() {
+
+	for (int i = 0; i < balls.size(); i++) {
+		balls[i].draw();
+	}
+
+}
+
+//--------------------------------------------------------------
+void ofApp::takeScreenshot() {
+
+	for (int i = 0; i < balls.size(); i++) {
+		balls[i].draw();
+	}
+
+}
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
