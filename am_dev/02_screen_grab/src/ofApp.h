@@ -26,6 +26,8 @@ public:
 	void takeScreenshot();
 	void drawGrid();
 
+	void pixelSort();
+
 	std::vector<Ball> balls;
 	
 	ofImage screenImage; // store a "screenshot" of each frame
