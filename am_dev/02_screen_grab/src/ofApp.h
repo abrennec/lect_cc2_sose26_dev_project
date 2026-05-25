@@ -22,6 +22,10 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	void drawBall();
+	void takeScreenshot();
+	void drawGrid();
+
 	std::vector<Ball> balls;
 	
 	ofImage screenImage; // store a "screenshot" of each frame
