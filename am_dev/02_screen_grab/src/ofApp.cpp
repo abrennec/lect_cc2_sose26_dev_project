@@ -3,6 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+	ofEnableDepthTest();
+	ofEnableLighting();
+	icosphere.setup();
 
 	cout << "GL Version: " << glGetString(GL_VERSION) << endl;
 	cout << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
@@ -28,6 +31,8 @@ void ofApp::update()
 	{
 		balls[i].update();
 	}
+
+	icosphere.update();
 }
 
 //--------------------------------------------------------------
@@ -36,7 +41,10 @@ void ofApp::draw()
 
 	drawBall();
 	takeScreenshot();
+	ofDisableDepthTest();
 	drawGrid();
+	ofEnableDepthTest();
+	icosphere.draw();
 }
 
 //--------------------------------------------------------------

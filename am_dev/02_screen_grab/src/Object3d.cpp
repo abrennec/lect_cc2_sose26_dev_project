@@ -1,0 +1,47 @@
+#include "Object3d.h"
+
+Object3d::Object3d(){
+
+    color = {255, 50, 100};
+    lightPos = {300,300,600};
+    rotation = 0;
+    icoPos = { 200, 200, 200 };
+
+
+}
+
+void Object3d::setup(){
+
+
+    light.setup();
+    light.setPosition(lightPos);
+
+    material.setDiffuseColor(ofColor(255, 50, 100));
+    material.setSpecularColor(ofColor::white);
+    material.setShininess(120);
+
+}
+
+    void Object3d::update() {
+    rotation += 3;  
+}
+
+    void Object3d::draw() {
+
+        light.enable();
+
+        ofPushMatrix();
+
+        ofTranslate(icoPos);
+
+        ofRotateZDeg(rotation);
+        ofRotateXDeg(rotation);
+
+        material.begin();
+        ofDrawIcoSphere(icoPos, 100);
+        material.end();
+
+        ofPopMatrix();
+
+        light.disable();
+    }
