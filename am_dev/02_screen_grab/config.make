@@ -8,7 +8,11 @@
 #   The location of your root openFrameworks installation
 #       (default) OF_ROOT = ../../.. 
 ################################################################################
+<<<<<<< HEAD
 OF_ROOT = E:/of_v0.12.1_vs_64_release/of_v0.12.1_vs_64_release
+=======
+OF_ROOT = D:/03_Filmuni/02_Semester/03_CC2/of_v0.12.1_vs_64_release
+>>>>>>> amelie
 
 ################################################################################
 # PROJECT ROOT
