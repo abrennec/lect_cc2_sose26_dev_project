@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "Ball.h"
 #include "Object3d.h"
+#include "Particle.h"
 
 class ofApp : public ofBaseApp
 {
@@ -28,10 +29,22 @@ public:
 	void drawGrid();
 
 	void pixelSort();
+	void pixelsToParticles();
 
 	Object3d icosphere;
 
 	std::vector<Ball> balls;
 
 	ofImage screenImage; // store a "screenshot" of each frame
+
+	struct PixelData
+	{
+		ofColor color;
+		ofVec2f pos;
+	};
+
+	bool particleMode = false;
+
+	std::vector<PixelData> pixelParticles;
+	std::vector<Particle> particlesArray;
 };

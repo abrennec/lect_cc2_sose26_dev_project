@@ -27,6 +27,13 @@ void ofApp::update()
 	}
 
 	icosphere.update();
+
+	if (particleMode) {
+
+		for (auto& p : particlesArray) {
+			p.update(ofVec2f(ofGetMouseX(), ofGetMouseY()));
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -37,6 +44,25 @@ void ofApp::draw()
 	// 3D Objekt
 	icosphere.draw();
 
+	if (!particleMode)
+	{
+		takeScreenshot();
+		pixelSort();
+		pixelsToParticles();
+
+		while (particlesArray.size() > 2000) {
+			particlesArray.erase(particlesArray.begin());
+		}
+
+		// Calling each particles update function
+		for (auto& p : particlesArray) {
+			p.update(ofVec2f(ofGetMouseX(), ofGetMouseY()));
+		}
+	}
+
+	for (auto& p : particlesArray) {
+		p.draw();
+	}
 	// Screenshot aufnehmen
 	takeScreenshot();
 
@@ -70,17 +96,22 @@ void ofApp::takeScreenshot()
 }
 
 //--------------------------------------------------------------
-void ofApp::pixelSort()
+void ofApp::pixelSort() // by Amelie
 {
-	ofPixels& pixels = screenImage.getPixels();
+	ofPixels &pixels = screenImage.getPixels();
 
 	int width = pixels.getWidth();
 	int height = pixels.getHeight();
 
+	// PixelData integrated by Maria to additionally retrieve the position along with the color
+
+	// clear pixels from last frame
+	pixelParticles.clear();
+
 	// jede Spalte einzeln bearbeiten
 	for (int x = 0; x < width; x++)
 	{
-		std::vector<ofColor> brightPixels;
+		std::vector<PixelData> brightPixels;
 
 		// helle Pixel sammeln
 		for (int y = 0; y < height; y++)
@@ -92,16 +123,24 @@ void ofApp::pixelSort()
 			// threshold
 			if (brightness > 40)
 			{
-				brightPixels.push_back(c);
+				// changed by Maria, added position retrieving
+				brightPixels.push_back(PixelData{c, ofVec2f(x, y)});
 			}
 		}
 
 		// nach Helligkeit sortieren
 		std::sort(brightPixels.begin(), brightPixels.end(),
-			[](const ofColor& a, const ofColor& b)
-			{
-				return a.getBrightness() < b.getBrightness();
-			});
+				  [](const PixelData &a, const PixelData &b)
+				  {
+					  return a.color.getBrightness() < b.color.getBrightness();
+				  });
+
+		// added by maria to get 1/4 of the bright pixels
+		int cutoff = brightPixels.size() * 0.75f;
+		for (int i = cutoff; i < brightPixels.size(); i++)
+		{
+			pixelParticles.push_back(brightPixels[i]);
+		}
 
 		// zurückschreiben
 		int index = 0;
@@ -112,7 +151,7 @@ void ofApp::pixelSort()
 
 			if (c.getBrightness() > 100 && index < brightPixels.size())
 			{
-				pixels.setColor(x, y, brightPixels[index]);
+				pixels.setColor(x, y, brightPixels[index].color);
 
 				index++;
 			}
@@ -120,6 +159,18 @@ void ofApp::pixelSort()
 	}
 
 	screenImage.update();
+}
+
+void ofApp::pixelsToParticles() // added by Maria
+{
+	// clear any previous particles
+	particlesArray.clear();
+
+	// spawn one particle per candidate pixel
+	for (int i = 0; i < pixelParticles.size(); i++)
+	{
+		particlesArray.emplace_back(pixelParticles[i].pos, pixelParticles[i].color);
+	}
 }
 
 //--------------------------------------------------------------
@@ -150,8 +201,7 @@ void ofApp::drawGrid()
 				x * width,
 				y * height,
 				width,
-				height
-			);
+				height);
 		}
 	}
 }
@@ -159,6 +209,19 @@ void ofApp::drawGrid()
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
+	if (key == '1')
+	{
+		particleMode = !particleMode;
+
+		if (particleMode)
+		{
+			pixelsToParticles(); // spawn once from frozen frame
+		}
+		else
+		{
+			particlesArray.clear(); // go back to normal
+		}
+	}
 }
 
 //--------------------------------------------------------------

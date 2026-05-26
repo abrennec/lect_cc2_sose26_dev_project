@@ -10,7 +10,7 @@ Ball::Ball() {
 
 	// random color with random brightness
 std::vector<ofColor> greens = {
-    ofColor(5, 146, 18),
+	ofColor(5, 146, 18),
     ofColor(6, 208, 1),
     ofColor(155, 236, 0),
     ofColor(243, 255, 144)
