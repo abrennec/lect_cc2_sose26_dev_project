@@ -39,15 +39,24 @@ Ai usage:
 #### *Task 2.1*
 
 process:
+
 - Brainstorming without AI
 
+#### *Task 2.2—pixel sorting by Amelie*
 
-#### *Task 2.2—pixel sorting*
 - Looking at tutorials
 - Looking at old files and documentation
 - Trying to implement it on my own
 - Suffer from failure and ask AI, since everything else took longer than 10h.
 
 Reflection:
-
 Since this effect required multiple loops and nested functionality, I needed help from AI. I still wrote the code myself instead of simply copying it so I could learn the syntax, and I also asked questions to better understand how it works.
+
+#### *Task 2.2—pixel to Particles by Maria*
+
+- Trying to implement the code we developed with Joel in class
+- Then exploring approaches to make the pixels become attracted to the mouse when pressing key 1
+- Proposing two approaches to Claude and discussing which method would work best
+- Working step by step, implementing the functionalities one by one, always starting with a theoretical solution
+- I heavily relied on Claude to make this possible within the limited time frame I had available
+- The overall logic works, but it’s not exactly what I originally planned, and some components are redundant or not functioning properly
