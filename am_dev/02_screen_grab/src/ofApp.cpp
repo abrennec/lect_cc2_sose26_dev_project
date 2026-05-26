@@ -5,18 +5,13 @@ void ofApp::setup()
 {
 	ofEnableDepthTest();
 	ofEnableLighting();
-	icosphere.setup();
 
-	cout << "GL Version: " << glGetString(GL_VERSION) << endl;
-	cout << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
-	cout << "Renderer: " << glGetString(GL_RENDERER) << endl;
-	cout << "Vendor: " << glGetString(GL_VENDOR) << endl;
+	icosphere.setup();
 
 	ofBackground(0);
 
-	int numBalls = 5;
+	int numBalls = 20;
 
-	// fill our vector
 	for (int i = 0; i < numBalls; i++)
 	{
 		balls.push_back(Ball());
@@ -26,7 +21,6 @@ void ofApp::setup()
 //--------------------------------------------------------------
 void ofApp::update()
 {
-
 	for (int i = 0; i < balls.size(); i++)
 	{
 		balls[i].update();
@@ -38,19 +32,28 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
-
 	drawBall();
-	takeScreenshot();
-	ofDisableDepthTest();
-	drawGrid();
-	ofEnableDepthTest();
+
+	// 3D Objekt
 	icosphere.draw();
+
+	// Screenshot aufnehmen
+	takeScreenshot();
+
+	// Pixel sortieren
+	pixelSort();
+
+	// 2D Overlay zeichnen
+	ofDisableDepthTest();
+
+	drawGrid();
+
+	ofEnableDepthTest();
 }
 
 //--------------------------------------------------------------
 void ofApp::drawBall()
 {
-
 	for (int i = 0; i < balls.size(); i++)
 	{
 		balls[i].draw();
@@ -60,28 +63,76 @@ void ofApp::drawBall()
 //--------------------------------------------------------------
 void ofApp::takeScreenshot()
 {
-
-	// now, take a "screenshot" of the frame
 	screenImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
 
-	// resize the screenshot to 10x10 pixels
-	screenImage.resize(10, 10);
+	// höhere Auflösung für besseres Pixel Sorting
+	screenImage.resize(160, 160);
 }
 
+//--------------------------------------------------------------
+void ofApp::pixelSort()
+{
+	ofPixels& pixels = screenImage.getPixels();
+
+	int width = pixels.getWidth();
+	int height = pixels.getHeight();
+
+	// jede Spalte einzeln bearbeiten
+	for (int x = 0; x < width; x++)
+	{
+		std::vector<ofColor> brightPixels;
+
+		// helle Pixel sammeln
+		for (int y = 0; y < height; y++)
+		{
+			ofColor c = pixels.getColor(x, y);
+
+			float brightness = c.getBrightness();
+
+			// threshold
+			if (brightness > 40)
+			{
+				brightPixels.push_back(c);
+			}
+		}
+
+		// nach Helligkeit sortieren
+		std::sort(brightPixels.begin(), brightPixels.end(),
+			[](const ofColor& a, const ofColor& b)
+			{
+				return a.getBrightness() < b.getBrightness();
+			});
+
+		// zurückschreiben
+		int index = 0;
+
+		for (int y = 0; y < height; y++)
+		{
+			ofColor c = pixels.getColor(x, y);
+
+			if (c.getBrightness() > 100 && index < brightPixels.size())
+			{
+				pixels.setColor(x, y, brightPixels[index]);
+
+				index++;
+			}
+		}
+	}
+
+	screenImage.update();
+}
+
+//--------------------------------------------------------------
 void ofApp::drawGrid()
 {
-
-	// sample colors from the screenshot, and draw as a grid overlay:
-	// overlay opacity based on mouse x
 	float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
 
 	ofSetColor(0, alpha);
-	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight()); // draw black rect to clear screen
+	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
-	int numCols = 10;
-	int numRows = 10;
+	int numCols = 160;
+	int numRows = 160;
 
-	// grid square size for drawing:
 	float width = ofGetWidth() / (float)numCols;
 	float height = ofGetHeight() / (float)numRows;
 
@@ -89,15 +140,18 @@ void ofApp::drawGrid()
 	{
 		for (int x = 0; x < numCols; x++)
 		{
-
-			// sample the color of the screenshot at this grid pos
 			ofColor color = screenImage.getColor(x, y);
+
 			color.a = alpha;
 
-			// draw a rectangle on screen
-
 			ofSetColor(color);
-			ofDrawRectangle(x * width, y * height, width, height);
+
+			ofDrawRectangle(
+				x * width,
+				y * height,
+				width,
+				height
+			);
 		}
 	}
 }
