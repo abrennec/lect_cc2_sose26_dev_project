@@ -25,9 +25,11 @@ public:
 
 	std::vector<Ball> balls;
 	ofImage screenImage; // store a "screenshot" of each frame
+	ofVideoGrabber videoGrabber;  
 
 	private:                          
 		void drawBalls();             
 		void updateScreenshot();
-		void drawPixelGrid();		
+		void drawPixelGrid();	
+		void updateBallColors();	
 };

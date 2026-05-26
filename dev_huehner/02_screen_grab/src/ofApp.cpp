@@ -10,7 +10,7 @@ void ofApp::setup(){
     cout << "Vendor: " << glGetString(GL_VENDOR) << endl;
 
 
-	ofBackground(0);
+	ofBackground(255);
 
 	int numBalls = 5;
 
@@ -34,6 +34,16 @@ void ofApp::draw(){
     drawBalls();
     updateScreenshot();
     drawPixelGrid();
+
+    // 3D OBJEKT HINZUFÜGEN
+    ofSetColor(255, 100, 100);  // Farbe: Rot
+    ofTranslate(ofGetWidth()/2, ofGetHeight()/2, 0);  // Mitte des Screens
+    
+    // Rotation basieren auf der Mausposition
+    ofRotateY(ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, TWO_PI) *4);  // TWO_PI = 360°
+    ofRotateX(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, TWO_PI) *4);
+    
+    ofDrawBox(100);  // Box mit Größe 100
 }
 
 //--------------------------------------------------------------
@@ -50,10 +60,7 @@ void ofApp::drawBalls(){
 
 //--------------------------------------------------------------
 void ofApp::updateScreenshot(){
-    // take a "screenshot" of the frame
     screenImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
-    
-    // resize the screenshot to 10x10 pixels
     screenImage.resize(10, 10);
 }
 
@@ -62,8 +69,8 @@ void ofApp::drawPixelGrid(){
     // overlay opacity based on mouse x
     float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
     
-    ofSetColor(0, alpha);
-    ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+    // ofSetColor(0, alpha);
+    // ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
     
     int numCols = 10;
     int numRows = 10;
@@ -131,3 +138,4 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
+
