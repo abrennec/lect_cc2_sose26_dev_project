@@ -27,6 +27,8 @@ public:
 	void takeScreenshot();
 	void drawGrid();
 
+	void pixelSort();
+
 	Object3d icosphere;
 
 	std::vector<Ball> balls;
