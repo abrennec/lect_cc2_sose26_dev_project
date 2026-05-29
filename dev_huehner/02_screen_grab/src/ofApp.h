@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "Ball.h"
 #include "Arrow.h"
-#include "Ball.h"
+#include "Box.h"
 
 
 class ofApp : public ofBaseApp{

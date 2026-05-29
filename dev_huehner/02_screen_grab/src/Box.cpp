@@ -6,11 +6,10 @@ Box::Box() {
 }
 
 void Box::update() {
-    // Hier könnten Updates rein wenn nötig
+  
 }
 
 void Box::draw() {
-    // ✅ DIESER CODE KOMMT HIER HER:
     ofSetColor(color);
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2, 0);
     
