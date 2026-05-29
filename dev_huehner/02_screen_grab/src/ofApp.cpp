@@ -19,6 +19,7 @@ void ofApp::setup(){
 		balls.push_back(Ball());
 	}
     
+    box = Box();
     arrow = Arrow();
 
 }
@@ -39,18 +40,8 @@ void ofApp::draw(){
     updateScreenshot();
     drawPixelGrid();
 	drawArrow(arrow);
+    box.draw();
 
-    // 3D OBJEKT HINZUFÜGEN
-    ofSetColor(255, 100, 100);  // Farbe: Rot
-    ofTranslate(ofGetWidth()/2, ofGetHeight()/2, 0);  // Mitte des Screens
-    
-    // Rotation basieren auf der Mausposition
-    ofRotateY(ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, TWO_PI) *4);  // TWO_PI = 360°
-    ofRotateX(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, TWO_PI) *4);
-    
-    ofDrawBox(100);  // Box mit Größe 100
-    
-	
 
 	/* KATHA 1.1. FUNCTION REFRACTION
     //-------- NEW FUNCTION ----------
