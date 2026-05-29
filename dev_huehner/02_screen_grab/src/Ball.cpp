@@ -19,8 +19,8 @@ Ball::Ball() {
 	y = ofRandom(radius, ofGetHeight() - radius);
 
 	// random x and y speeds/directions between -10 and 10
-	dirX = ofRandom(-10,10);
-	dirY = ofRandom(-10,10);
+	dirX = ofRandom(-0.1,0.1);
+	dirY = ofRandom(-0.1,0.1);
 }
 
 // update position, etc.

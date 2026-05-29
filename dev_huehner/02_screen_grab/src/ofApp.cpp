@@ -1,79 +1,79 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup()
+{
 
-
-	cout << "GL Version: " << glGetString(GL_VERSION) << endl;
+    cout << "GL Version: " << glGetString(GL_VERSION) << endl;
     cout << "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
     cout << "Renderer: " << glGetString(GL_RENDERER) << endl;
     cout << "Vendor: " << glGetString(GL_VENDOR) << endl;
 
+    ofBackground(157);
 
-	ofBackground(157);
+    int numBalls = 5;
 
-	int numBalls = 5;
+    // fill our vector
+    for (int i = 0; i < numBalls; i++)
+    {
+        balls.push_back(Ball());
+    }
 
-	// fill our vector
-	for (int i = 0; i < numBalls; i++) {
-		balls.push_back(Ball());
-	}
-    
     box = Box();
     arrow = Arrow();
-
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update()
+{
 
-	for (int i = 0; i < balls.size(); i++) {
-		balls[i].update();
-	}
-    
+    for (int i = 0; i < balls.size(); i++)
+    {
+        balls[i].update();
+    }
+
     arrow.update();
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw()
+{
     drawBalls();
     updateScreenshot();
     drawPixelGrid();
-	drawArrow(arrow);
+    drawArrow(arrow);
     box.draw();
 
-
-	/* KATHA 1.1. FUNCTION REFRACTION
+    /* KATHA 1.1. FUNCTION REFRACTION
     //-------- NEW FUNCTION ----------
     drawBalls(balls);
-    
-	// now, take a "screenshot" of the frame
-	screenImage.grabScreen(0,0,ofGetWidth(),ofGetHeight());
-	
-	// resize the screenshot to 10x10 pixels
-	screenImage.resize(10,10);
-	
+
+    // now, take a "screenshot" of the frame
+    screenImage.grabScreen(0,0,ofGetWidth(),ofGetHeight());
+
+    // resize the screenshot to 10x10 pixels
+    screenImage.resize(10,10);
+
 
     //-------- NEW FUNCTIONS ----------
     // overlay opacity based on mouse x
     alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
     sampleColor(alpha);
-    
+
     //calculate Grid
     int numCols = 10;
     int numRows = 10;
     float width, height;
     calcGrid(numCols, numRows, width, height);
-    
+
     // sampling with rectangles
     sample(alpha, width, height, numRows, numCols);*/
-    
 }
 
-void ofApp::drawArrow(Arrow& arrow){
+void ofApp::drawArrow(Arrow &arrow)
+{
     arrow.draw();
 }
-
 
 /*KATHA
 // Function Refractoring START
@@ -93,14 +93,14 @@ void ofApp::calcGrid(int numRows, int numCols, float& width, float& height){
 };
 
 void ofApp::sample(float alpha, float width, float height, int numCols, int numRows){
-   
+
     for (int y=0; y<numRows; y++) {
         for (int x=0; x<numCols; x++) {
-            
+
             // sample the color of the screenshot at this grid pos
             ofColor color = screenImage.getColor(x,y);
             color.a = alpha;
-            
+
             // draw a rectangle on screen
             ofSetColor(color);
             ofDrawRectangle(x * width, y * height, width, height);
@@ -118,45 +118,49 @@ void ofApp::sampleColor(float alpha){
 //Function Refractoring END
 */
 
-
-
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
+void ofApp::keyPressed(int key)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::drawBalls(){
-    for (int i = 0; i < balls.size(); i++) {
+void ofApp::drawBalls()
+{
+    for (int i = 0; i < balls.size(); i++)
+    {
         balls[i].draw();
     }
 }
 
 //--------------------------------------------------------------
-void ofApp::updateScreenshot(){
+void ofApp::updateScreenshot()
+{
     screenImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
     screenImage.resize(10, 10);
 }
 
 //--------------------------------------------------------------
-void ofApp::drawPixelGrid(){
+void ofApp::drawPixelGrid()
+{
     // overlay opacity based on mouse x
     float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
-    
+
     // ofSetColor(0, alpha);
     // ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-    
+
     int numCols = 10;
     int numRows = 10;
-    
+
     float width = ofGetWidth() / (float)numCols;
     float height = ofGetHeight() / (float)numRows;
-    
-    for (int y = 0; y < numRows; y++) {
-        for (int x = 0; x < numCols; x++) {
+
+    for (int y = 0; y < numRows; y++)
+    {
+        for (int x = 0; x < numCols; x++)
+        {
             ofColor color = screenImage.getColor(x, y);
             color.a = alpha;
-            
+
             ofSetColor(color);
             ofDrawRectangle(x * width, y * height, width, height);
         }
@@ -164,52 +168,76 @@ void ofApp::drawPixelGrid(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
+void ofApp::keyReleased(int key)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
+void ofApp::mouseMoved(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
+void ofApp::mouseDragged(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button)
+{
 
+    mouseX = ofGetMouseX();
+    mouseY = ofGetMouseY();
+
+    for (int i = 0; i < balls.size(); i++)
+    {
+
+        float disX = mouseX - balls[i].x;
+        float disY = mouseY - balls[i].y;
+
+        // calculate euklidian distance
+        double distance = sqrtl(pow(disX, 2) + pow(disY, 2)); // Euclidean distance derived from Pythagoras Theorem
+                                                              // delete ball
+        for (int i = balls.size() - 1; i >= 0; i--)
+        { // ← Rückwärts!
+            float disX = mouseX - balls[i].x;
+            float disY = mouseY - balls[i].y;
+            double distance = sqrtl(pow(disX, 2) + pow(disY, 2));
+
+            if (distance < balls[i].radius)
+            {
+                balls.erase(balls.begin() + i);
+            }
+        }
+    }
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
+void ofApp::mouseReleased(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
+void ofApp::mouseEntered(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
+void ofApp::mouseExited(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
+void ofApp::windowResized(int w, int h)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
+void ofApp::gotMessage(ofMessage msg)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::dragEvent(ofDragInfo dragInfo)
+{
 }
-

@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "Ball.h"
 #include "Arrow.h"
-#include "Ball.h"
+#include "Box.h"
 
 
 class ofApp : public ofBaseApp{
@@ -54,4 +54,6 @@ public:
     int numRows = 0;
     float width = 0;
     float height = 0;
+	float mouseX = 0; 
+    float mouseY = 0; 
 };
