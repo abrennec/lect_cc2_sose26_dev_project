@@ -175,6 +175,22 @@ void ofApp::keyReleased(int key)
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y)
 {
+    mouseX = ofGetMouseX();
+    mouseY = ofGetMouseY();
+
+    for (int i = 0; i < balls.size(); i++)
+    {
+        balls[i].isHovered = false;
+        // calculate euklidian distance
+        float disX = mouseX - balls[i].x;
+        float disY = mouseY - balls[i].y;
+        double distance = sqrtl(pow(disX, 2) + pow(disY, 2)); // Euclidean distance derived from Pythagoras Theorem
+                                                              // delete ball
+        if (distance < balls[i].radius)
+        {
+            balls[i].isHovered = true;
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -199,7 +215,7 @@ void ofApp::mousePressed(int x, int y, int button)
         double distance = sqrtl(pow(disX, 2) + pow(disY, 2)); // Euclidean distance derived from Pythagoras Theorem
                                                               // delete ball
         for (int i = balls.size() - 1; i >= 0; i--)
-        { // ← Rückwärts!
+        {
             float disX = mouseX - balls[i].x;
             float disY = mouseY - balls[i].y;
             double distance = sqrtl(pow(disX, 2) + pow(disY, 2));

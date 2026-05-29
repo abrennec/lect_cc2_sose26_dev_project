@@ -5,25 +5,25 @@
 #include "Arrow.h"
 #include "Box.h"
 
-
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp
+{
 
 public:
 	void setup();
 	void update();
 	void draw();
 
-    // NEW functions
-    /*void drawBalls(vector<Ball>& balls);
-    void sampleColor(float alpha);
-    void calcGrid(int numCols, int numRows, float& width, float& height);
-    void sample(float alpha, float width, float height, int numCols, int numRows);*/
+	// NEW functions
+	/*void drawBalls(vector<Ball>& balls);
+	void sampleColor(float alpha);
+	void calcGrid(int numCols, int numRows, float& width, float& height);
+	void sample(float alpha, float width, float height, int numCols, int numRows);*/
 
-	void drawArrow(Arrow& arrow);
+	void drawArrow(Arrow &arrow);
 
 	void keyPressed(int key);
 	void keyReleased(int key);
-	void mouseMoved(int x, int y );
+	void mouseMoved(int x, int y);
 	void mouseDragged(int x, int y, int button);
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
@@ -35,25 +35,24 @@ public:
 
 	std::vector<Ball> balls;
 	ofImage screenImage; // store a "screenshot" of each frame
-	ofVideoGrabber videoGrabber; 
-	Box box; 
-	Arrow arrow; 
+	ofVideoGrabber videoGrabber;
+	Box box;
+	Arrow arrow;
 
-	private:                          
-		void drawBalls();             
-		void updateScreenshot();
-		void drawPixelGrid();	
-		void updateBallColors();	
-	
+private:
+	void drawBalls();
+	void updateScreenshot();
+	void drawPixelGrid();
+	void updateBallColors();
 
-	//ofImage screenImage; // store a "screenshot" of each frame
-    
-    //new variables
-    float alpha = 0;
-    int numCols = 0;
-    int numRows = 0;
-    float width = 0;
-    float height = 0;
-	float mouseX = 0; 
-    float mouseY = 0; 
+	// ofImage screenImage; // store a "screenshot" of each frame
+
+	// new variables
+	float alpha = 0;
+	int numCols = 0;
+	int numRows = 0;
+	float width = 0;
+	float height = 0;
+	float mouseX = 0;
+	float mouseY = 0;
 };
