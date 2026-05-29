@@ -19,7 +19,7 @@ void ofApp::setup(){
 		balls.push_back(Ball());
 	}
     
-    box = Box();
+    
     arrow = Arrow();
 
 }
@@ -40,8 +40,9 @@ void ofApp::draw(){
     updateScreenshot();
     drawPixelGrid();
 	drawArrow(arrow);
-    box.draw();
 
+    
+	
 
 	/* KATHA 1.1. FUNCTION REFRACTION
     //-------- NEW FUNCTION ----------
