@@ -40,6 +40,7 @@ void ofApp::draw(){
     updateScreenshot();
     drawPixelGrid();
 	drawArrow(arrow);
+    box.draw();
 
     
 	
