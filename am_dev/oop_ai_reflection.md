@@ -57,6 +57,6 @@ Since this effect required multiple loops and nested functionality, I needed hel
 - Trying to implement the code we developed with Joel in class
 - Then exploring approaches to make the pixels become attracted to the mouse when pressing key 1
 - Proposing two approaches to Claude and discussing which method would work best
-- Working step by step, implementing the functionalities one by one, always starting with a theoretical solution
-- I heavily relied on Claude to make this possible within the limited time frame I had available
-- The overall logic works, but it’s not exactly what I originally planned, and some components are redundant or not functioning properly
+- Working step by step, implementing the functionalities one by one, always starting with a theoretical solution and then discuss it with Claude how to practically implement that
+- e.g. Prompt "Take the vector brightPixels, get its size and then for vector size <= 25%, collect the color and position of those pixels"   
+- I heavily relied on Claude to make this possible, I could've not done it without AI within the limited time frame I had available
