@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "Ball.h"
 #include "Arrow.h"
+#include "Box.h"
 
 
 class ofApp : public ofBaseApp{
@@ -35,6 +36,7 @@ public:
 	std::vector<Ball> balls;
 	ofImage screenImage; // store a "screenshot" of each frame
 	ofVideoGrabber videoGrabber; 
+	Box box; 
 	Arrow arrow; 
 
 	private:                          
