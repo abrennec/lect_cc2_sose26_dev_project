@@ -40,41 +40,22 @@ void ofApp::update()
 void ofApp::draw()
 {
 	drawBall();
-
-	// 3D Objekt
 	icosphere.draw();
 
-	if (!particleMode)
-	{
-		takeScreenshot();
-		pixelSort();
-		pixelsToParticles();
-
-		while (particlesArray.size() > 2000) {
-			particlesArray.erase(particlesArray.begin());
-		}
-
-		// Calling each particles update function
-		for (auto& p : particlesArray) {
-			p.update(ofVec2f(ofGetMouseX(), ofGetMouseY()));
-		}
-	}
-
-	for (auto& p : particlesArray) {
-		p.draw();
-	}
-	// Screenshot aufnehmen
 	takeScreenshot();
-
-	// Pixel sortieren
 	pixelSort();
 
-	// 2D Overlay zeichnen
 	ofDisableDepthTest();
-
 	drawGrid();
-
 	ofEnableDepthTest();
+
+	// Only draw particles when in particle mode
+	if (particleMode)
+	{
+		for (auto& p : particlesArray) {
+			p.draw();
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -161,16 +142,18 @@ void ofApp::pixelSort() // by Amelie
 	screenImage.update();
 }
 
-void ofApp::pixelsToParticles() // added by Maria
+void ofApp::pixelsToParticles()
 {
-	// clear any previous particles
-	particlesArray.clear();
+    particlesArray.clear();
 
-	// spawn one particle per candidate pixel
-	for (int i = 0; i < pixelParticles.size(); i++)
-	{
-		particlesArray.emplace_back(pixelParticles[i].pos, pixelParticles[i].color);
-	}
+    float scaleX = ofGetWidth() / 160.0f;
+    float scaleY = ofGetHeight() / 160.0f;
+
+    for (int i = 0; i < pixelParticles.size(); i++)
+    {
+        ofVec2f scaledPos = pixelParticles[i].pos * ofVec2f(scaleX, scaleY);
+        particlesArray.emplace_back(scaledPos, pixelParticles[i].color);
+    }
 }
 
 //--------------------------------------------------------------
