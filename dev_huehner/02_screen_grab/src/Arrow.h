@@ -8,21 +8,25 @@
 #pragma once		
 #include "ofMain.h"		// ofMain.h lets our Ball "see" openFrameworks
 
-class Ball {
+class Arrow {
 
 public:		// other classes can access the following functions & variables:
 
-	Ball();				// "constructor" function - required for every class
+	Arrow();				// "constructor" function - required for every class
 						// this is automatically called whenever we create a new ball
 
 	void update();
 	void draw();
-
-	float radius;		// size
-	float x, y;			// position
-	float dirX, dirY;	// "direction" (a.k.a. velocity or speed)
-
-	ofColor color;
-	
-
+    
+    ofColor color;
+    
+private:
+    glm::vec3 start;
+    glm::vec3 end;
+    float arrowSize;
+    
+    float x = 0;
+    float y = 0;
+    float mouseY = 0;
+    float mouseX = 0;
 };

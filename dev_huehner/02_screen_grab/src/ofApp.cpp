@@ -40,7 +40,11 @@ void ofApp::draw(){
     updateScreenshot();
     drawPixelGrid();
 	drawArrow(arrow);
+<<<<<<< HEAD
     box.draw(); 
+=======
+    box.draw();
+>>>>>>> huehner
 
     
 	
