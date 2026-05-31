@@ -40,11 +40,8 @@ void ofApp::draw(){
     updateScreenshot();
     drawPixelGrid();
 	drawArrow(arrow);
-<<<<<<< HEAD
     box.draw(); 
-=======
-    box.draw();
->>>>>>> huehner
+
 
     
 	
@@ -141,40 +138,48 @@ void ofApp::drawBalls(){
 //--------------------------------------------------------------
 void ofApp::updateScreenshot(){
     screenImage.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
-    screenImage.resize(10, 10);
+    screenImage.resize(100, 50);
 }
 
 //--------------------------------------------------------------
 void ofApp::drawPixelGrid(){
-    // overlay opacity based on mouse x
     float alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
     
-    // ofSetColor(0, alpha);
-    // ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-    
-    int numCols = 10;
-    int numRows = 10;
+    int numCols = 100;
+    int numRows = 50;
     
     float width = ofGetWidth() / (float)numCols;
     float height = ofGetHeight() / (float)numRows;
     
     // 2.2 Bonita: Pixel-ASCII-Zeichen von dunkel zu hell
+
+    // HINTERGRUND: Schwarzes Rectangle mit alpha
+    ofSetColor(157, alpha);  
+    ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+
+    // ASCII-Zeichen
     string asciiChars = " .:-=+*#%@";
-    
-    for (int y = 0; y < numRows; y++) {
-        for (int x = 0; x < numCols; x++) {
+    float bgBrightness = 157;  // Hintergrundhelligkeit (wie ofBackground(157))
+
+    for (int y = 0; y < numRows; y++)
+    {
+        for (int x = 0; x < numCols; x++)
+        {
             ofColor color = screenImage.getColor(x, y);
-            
-            // Helligkeit bestimmt, welches ASCII-Zeichen
             float brightness = color.getBrightness();
-            int charIndex = ofMap(brightness, 0, 255, 0, asciiChars.length()-1);
-            char asciiChar = asciiChars[charIndex];
-            
-            // Farbe + Alpha (wie vorher)
-            ofSetColor(color, alpha);
-            
-            // ASCII-Zeichen zeichnen statt Rechteck
-            ofDrawBitmapString(string(1, asciiChar), x * width, y * height);
+
+            if (abs(brightness - bgBrightness) > 10)
+            {
+                int charIndex = ofMap(brightness, 0, 255, 0, asciiChars.length() - 1);
+                char asciiChar = asciiChars[charIndex];
+
+                ofSetColor(color, alpha);
+
+                // 2-3x übereinander zeichnen = fetter Effekt!
+                ofDrawBitmapString(string(1, asciiChar), x * width, y * height + 9);
+                ofDrawBitmapString(string(1, asciiChar), x * width + 1, y * height + 9);
+                ofDrawBitmapString(string(1, asciiChar), x * width, y * height + 10);
+            }
         }
     }
 }
