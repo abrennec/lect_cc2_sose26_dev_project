@@ -6,6 +6,7 @@ Ball::Ball() {
 	// inside the constructor you initialize the object's variables
 
 	// random radius between 10 and 50
+<<<<<<< HEAD
 	radius = ofRandom(50,100);
 
 	// random color
@@ -13,6 +14,19 @@ Ball::Ball() {
 	float green	= ofRandom(0,255);		
 	float blue	= ofRandom(0,255);
 	color = ofColor(red, green, blue);
+=======
+	radius = ofRandom(50,150);
+
+	// random color with random brightness
+std::vector<ofColor> greens = {
+	ofColor(5, 146, 18),
+    ofColor(6, 208, 1),
+    ofColor(155, 236, 0),
+    ofColor(243, 255, 144)
+};
+
+color = greens[(int)ofRandom(greens.size())];
+>>>>>>> am-team
 
 	// random position in window
 	x = ofRandom(radius, ofGetWidth()  - radius);
