@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "ofMain.h" // ofMain.h lets our Ball "see" openFrameworks
+#include "ofMain.h"
 
 class Ball
 {

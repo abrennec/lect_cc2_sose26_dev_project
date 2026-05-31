@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include <iostream>
 
 // constructor
 Ball::Ball()
@@ -83,12 +84,12 @@ void Ball::draw()
 
 void Ball::noiseEffect()
 {
-	noiseFrequency = 10f;
-	noiseStrenght = 0.3f;
+	noiseFrequency = 40.0f;
+	noiseStrenght = 1.0f;
 	noiseSeed = ofGetElapsedTimef();
 
 	// get vertecies on circle
-	int n = 100;
+	int n = 80;
 
 	ofBeginShape();
 	for (int i = 0; i < n; i++)
@@ -96,12 +97,13 @@ void Ball::noiseEffect()
 		float angle = (i / (float)n) * TWO_PI;
 		float baseRadius = radius;
 		float noiseValue = ofNoise(angle * noiseFrequency, noiseSeed);
+		std::cout << noiseValue<< std::endl;
 		float wobblyRadius = baseRadius * (1.0f + noiseValue * noiseStrenght);
 
-		float x = this->x + cos(angle) * wobblyRadius; // ← Ball-Position addieren!
+		float x = this->x + cos(angle) * wobblyRadius;
 		float y = this->y + sin(angle) * wobblyRadius;
 
-		ofVertex(x, y); // ← Punkt direkt zeichnen!
+		ofVertex(x, y); 
 	}
 	ofEndShape();
 }
