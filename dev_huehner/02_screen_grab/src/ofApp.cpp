@@ -10,7 +10,7 @@ void ofApp::setup(){
     cout << "Vendor: " << glGetString(GL_VENDOR) << endl;
 
 
-	ofBackground(255);
+	ofBackground(157);
 
 	int numBalls = 5;
 
@@ -18,6 +18,9 @@ void ofApp::setup(){
 	for (int i = 0; i < numBalls; i++) {
 		balls.push_back(Ball());
 	}
+    
+    
+    arrow = Arrow();
 
 }
 
@@ -27,6 +30,8 @@ void ofApp::update(){
 	for (int i = 0; i < balls.size(); i++) {
 		balls[i].update();
 	}
+    
+    arrow.update();
 }
 
 //--------------------------------------------------------------
@@ -34,17 +39,88 @@ void ofApp::draw(){
     drawBalls();
     updateScreenshot();
     drawPixelGrid();
+	drawArrow(arrow);
+    box.draw(); 
 
-    // 3D OBJEKT HINZUFÜGEN
-    ofSetColor(255, 100, 100);  // Farbe: Rot
-    ofTranslate(ofGetWidth()/2, ofGetHeight()/2, 0);  // Mitte des Screens
     
-    // Rotation basieren auf der Mausposition
-    ofRotateY(ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, TWO_PI) *4);  // TWO_PI = 360°
-    ofRotateX(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, TWO_PI) *4);
+	
+
+	/* KATHA 1.1. FUNCTION REFRACTION
+    //-------- NEW FUNCTION ----------
+    drawBalls(balls);
     
-    ofDrawBox(100);  // Box mit Größe 100
+	// now, take a "screenshot" of the frame
+	screenImage.grabScreen(0,0,ofGetWidth(),ofGetHeight());
+	
+	// resize the screenshot to 10x10 pixels
+	screenImage.resize(10,10);
+	
+
+    //-------- NEW FUNCTIONS ----------
+    // overlay opacity based on mouse x
+    alpha = ofMap(ofGetMouseX(), 0, ofGetWidth(), 0, 255, true);
+    sampleColor(alpha);
+    
+    //calculate Grid
+    int numCols = 10;
+    int numRows = 10;
+    float width, height;
+    calcGrid(numCols, numRows, width, height);
+    
+    // sampling with rectangles
+    sample(alpha, width, height, numRows, numCols);*/
+    
 }
+
+void ofApp::drawArrow(Arrow& arrow){
+    arrow.draw();
+}
+
+
+/*KATHA
+// Function Refractoring START
+//--------------------------------------------------------------
+
+void ofApp::drawBalls(vector<Ball>& balls){
+
+    for (int i = 0; i < balls.size(); i++) {
+        balls[i].draw();
+    }
+}
+
+void ofApp::calcGrid(int numRows, int numCols, float& width, float& height){
+    // grid square size for drawing:
+    width = ofGetWidth() / (float)numCols;
+    height = ofGetHeight() / (float)numRows;
+};
+
+void ofApp::sample(float alpha, float width, float height, int numCols, int numRows){
+   
+    for (int y=0; y<numRows; y++) {
+        for (int x=0; x<numCols; x++) {
+            
+            // sample the color of the screenshot at this grid pos
+            ofColor color = screenImage.getColor(x,y);
+            color.a = alpha;
+            
+            // draw a rectangle on screen
+            ofSetColor(color);
+            ofDrawRectangle(x * width, y * height, width, height);
+        }
+    }
+
+}
+
+void ofApp::sampleColor(float alpha){
+    // sample colors from the screenshot, and draw as a grid overlay:
+    ofSetColor(0, alpha);
+    ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());    // draw black rect to clear screen
+}
+
+//Function Refractoring END
+*/
+
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -78,13 +154,23 @@ void ofApp::drawPixelGrid(){
     float width = ofGetWidth() / (float)numCols;
     float height = ofGetHeight() / (float)numRows;
     
+    // 2.2 Bonita: Pixel-ASCII-Zeichen von dunkel zu hell
+    string asciiChars = " .:-=+*#%@";
+    
     for (int y = 0; y < numRows; y++) {
         for (int x = 0; x < numCols; x++) {
             ofColor color = screenImage.getColor(x, y);
-            color.a = alpha;
             
-            ofSetColor(color);
-            ofDrawRectangle(x * width, y * height, width, height);
+            // Helligkeit bestimmt, welches ASCII-Zeichen
+            float brightness = color.getBrightness();
+            int charIndex = ofMap(brightness, 0, 255, 0, asciiChars.length()-1);
+            char asciiChar = asciiChars[charIndex];
+            
+            // Farbe + Alpha (wie vorher)
+            ofSetColor(color, alpha);
+            
+            // ASCII-Zeichen zeichnen statt Rechteck
+            ofDrawBitmapString(string(1, asciiChar), x * width, y * height);
         }
     }
 }
