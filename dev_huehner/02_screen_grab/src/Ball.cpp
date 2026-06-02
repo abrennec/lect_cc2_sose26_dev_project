@@ -56,7 +56,11 @@ void Ball::update() {
 
 // draw the ball
 void Ball::draw() {
-
 	ofSetColor(color);				// set the GLOBAL color
+
+	ofColor brightColor = color;
+	brightColor.setBrightness(200);
+	ofSetColor(brightColor);
+	
 	ofDrawCircle(x,y, radius);		// and draw
 }
