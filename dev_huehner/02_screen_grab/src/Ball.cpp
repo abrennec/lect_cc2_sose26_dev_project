@@ -67,15 +67,19 @@ void Ball::update()
 }
 
 // draw the ball
-void Ball::draw()
-{
+void Ball::draw() {
 
-	ofSetColor(color);
+	ofSetColor(color);				// set the GLOBAL color
+
+	ofColor brightColor = color;
+	brightColor.setBrightness(200);
+	ofSetColor(brightColor);
 
 	if (isHovered)
 	{
 		noiseEffect();
 	}
+
 	else
 	{
 		ofDrawCircle(x, y, radius);
