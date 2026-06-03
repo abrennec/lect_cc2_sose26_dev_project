@@ -3,7 +3,8 @@
 #include "ofMain.h"
 #include "Ball.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp
+{
 
 public:
 	void setup();
@@ -13,13 +14,15 @@ public:
 	// newly added functions :)
 	void drawGridOverlay();
 	void drawBalls();
+	void drawSpiralBalls();  // ===== NEW (spiral feature) =====
 	void captureScreen();
 	void changeSomething();
 	void drawWebCamInput();
+	void drawBrushStrokes();
 
 	void keyPressed(int key);
 	void keyReleased(int key);
-	void mouseMoved(int x, int y );
+	void mouseMoved(int x, int y);
 	void mouseDragged(int x, int y, int button);
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
@@ -31,8 +34,10 @@ public:
 
 private:
 	std::vector<Ball> balls;
-	ofImage screenImage;
-	ofVideoGrabber webCam;
+	std::vector<ofPolyline> brushStrokes;
+	ofPolyline currentStroke;
 	ofColor newcolor;
 	float camSize;
+	ofVideoGrabber webCam;
+	ofImage screenImage;
 };
