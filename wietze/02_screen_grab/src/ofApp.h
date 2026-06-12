@@ -16,6 +16,12 @@ public:
 	int levels = 4;                
 	void applyPosterize(ofPixels& dst, const ofPixels& src, int levels);
 
+
+	float lensRadius = 100;
+
+	void applyLens(ofPixels& dst, const ofPixels& src, int mx, int my, float r);
+
+
 	void keyPressed(int key);
 	void keyReleased(int key);
 	void mouseMoved(int x, int y );

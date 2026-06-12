@@ -8,7 +8,7 @@
 #   The location of your root openFrameworks installation
 #       (default) OF_ROOT = ../../.. 
 ################################################################################
-OF_ROOT = C:/Users/Nike/Documents/Nike/CTech/Semester2/CC2/of_v0.12.1_vs_64_release
+OF_ROOT = /Users/jd/Documents/of_v0.12.1_osx_release
 
 ################################################################################
 # PROJECT ROOT

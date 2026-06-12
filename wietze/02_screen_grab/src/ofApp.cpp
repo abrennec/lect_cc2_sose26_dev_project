@@ -1,4 +1,6 @@
 #include "ofApp.h"
+#include <algorithm>
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -38,7 +40,7 @@ if (grabber.isFrameNew()) {
     ofPixels dst = src;
 
     applyPosterize(dst, src, levels);
-
+    applyLens(dst, src, ofGetMouseX(), ofGetMouseY(), lensRadius);
     display.setFromPixels(dst);
 }
 
@@ -190,3 +192,21 @@ void ofApp::applyPosterize(ofPixels& dst, const ofPixels& src, int levels) {
         }
     }
 }
+
+
+void ofApp::applyLens(ofPixels& dst, const ofPixels& src, int mx, int my, float r) {
+    for (int y = std::max(0, (int)(my - r)); y <= std::min((int)src.getHeight() - 1, (int)(my + r)); y++) {
+        for (int x = std::max(0, (int)(mx - r)); x <= std::min((int)src.getWidth() - 1, (int)(mx + r)); x++) {
+            float dx = x - mx, dy = y - my;
+            if (dx * dx + dy * dy <= r * r) {
+                ofColor c = src.getColor(x, y);
+                c.r = round(c.r / 64.0) * 64.0;
+                c.g = round(c.g / 64.0) * 64.0;
+                c.b = round(c.b / 64.0) * 64.0;
+                dst.setColor(x, y, c);
+            }
+        }
+    }
+}
+
+
