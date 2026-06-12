@@ -71,3 +71,43 @@ bin/
 
 # other
 *.ppm
+
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+*.code-workspace
+
+# VS Code cache / databases
+*.db
+*.sqlite
+*.sqlite3
+
+# =========================
+# macOS system files
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# =========================
+# openFrameworks build files
+# =========================
+bin/
+obj/
+*.o
+*.d
+*.mode1v3
+*.mode2v3
+*.pbxuser
+*.xcuserstate
+*.xccheckout
+
+# =========================
+# build artifacts
+# =========================
+Debug/
+Release/
+
+
