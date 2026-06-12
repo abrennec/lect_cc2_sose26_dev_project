@@ -17,6 +17,12 @@ void ofApp::setup(){
     for (int i = 0; i < numBalls; i++) {
         balls.push_back(Ball());
     }
+
+    grabber.setDeviceID(1);
+    grabber.setup(640, 480);
+    display = img;
+
+
 }
 
 //--------------------------------------------------------------
@@ -25,6 +31,18 @@ void ofApp::update(){
     for (int i = 0; i < balls.size(); i++) {
         balls[i].update();
     }
+
+grabber.update();
+if (grabber.isFrameNew()) {
+    ofPixels src = grabber.getPixels();
+    ofPixels dst = src;
+
+    applyPosterize(dst, src, levels);
+
+    display.setFromPixels(dst);
+}
+
+
 }
 
 //--------------------------------------------------------------
@@ -33,6 +51,9 @@ void ofApp::draw(){
     drawBalls();
     Screenshot();
     PixelGrid();
+
+    display.draw(0, 0);
+
 }
 
 //--------------------------------------------------------------
@@ -154,4 +175,17 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
+}
+
+void ofApp::applyPosterize(ofPixels& dst, const ofPixels& src, int levels) {
+    float step = 255.0 / (levels - 1);
+    for (int y = 0; y < src.getHeight(); y++) {
+        for (int x = 0; x < src.getWidth(); x++) {
+            ofColor c = src.getColor(x, y);
+            c.r = round(c.r / step) * step;
+            c.g = round(c.g / step) * step;
+            c.b = round(c.b / step) * step;
+            dst.setColor(x, y, c);
+        }
+    }
 }

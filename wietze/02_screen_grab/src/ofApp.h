@@ -10,6 +10,12 @@ public:
 	void update();
 	void draw();
 
+	ofVideoGrabber grabber;         
+	ofImage img;                    
+	ofImage display;             
+	int levels = 4;                
+	void applyPosterize(ofPixels& dst, const ofPixels& src, int levels);
+
 	void keyPressed(int key);
 	void keyReleased(int key);
 	void mouseMoved(int x, int y );
@@ -26,5 +32,8 @@ public:
 	
 	ofImage screenImage; // store a "screenshot" of each frame
 	
+
+	
+
 		
 };
