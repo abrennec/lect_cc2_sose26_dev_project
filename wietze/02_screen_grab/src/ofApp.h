@@ -26,5 +26,10 @@ public:
 	
 	ofImage screenImage; // store a "screenshot" of each frame
 	
+
+	private:
+    void drawBalls();
+    void Screenshot();
+    void PixelGrid();
 		
 };
