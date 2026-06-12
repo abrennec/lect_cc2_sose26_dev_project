@@ -21,8 +21,4 @@ int main( ){
     ofRunMainLoop();
 
 
-    private:
-    void drawBalls();
-    void Screenshot();
-    void PixelGrid();
 }

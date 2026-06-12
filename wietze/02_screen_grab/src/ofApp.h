@@ -27,6 +27,9 @@ public:
 	void windowResized(int w, int h);
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
+	void drawBalls();
+	void Screenshot();
+	void PixelGrid();
 
 	std::vector<Ball> balls;
 	

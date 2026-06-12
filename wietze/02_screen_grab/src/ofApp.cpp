@@ -18,7 +18,7 @@ void ofApp::setup(){
         balls.push_back(Ball());
     }
 
-    grabber.setDeviceID(1);
+    grabber.setDeviceID(2);
     grabber.setup(640, 480);
     display = img;
 
@@ -47,12 +47,13 @@ if (grabber.isFrameNew()) {
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
     drawBalls();
-    Screenshot();
-    PixelGrid();
+  //Screenshot();
+   //PixelGrid();
+   display.draw(0, 0);
 
-    display.draw(0, 0);
+
+  
 
 }
 
